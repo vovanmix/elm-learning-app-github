@@ -1,22 +1,32 @@
 module Main exposing (..)
 
-import Html exposing (program)
-import Task
+import Navigation
+import Messages exposing (Msg)
+import Models exposing (..)
 import Update
-import Types exposing (..)
 import Subscriptions
 import View
+import Routing
 
 
+main : Program Never Model Msg
 main =
-    program
-        { init = ( init, initCmds )
+    Navigation.program Messages.OnLocationChange
+        { init = init
         , update = Update.update
         , view = View.view
         , subscriptions = Subscriptions.subscriptions
         }
 
 
-init : Model
-init =
-    {}
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
+    let
+        currentRoute =
+            Routing.init location
+    in
+        ( initialModel currentRoute, Cmd.none )
+
+
+
+--  ( initialModel currentRoute, fetchPlayers )
