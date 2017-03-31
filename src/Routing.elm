@@ -4,14 +4,14 @@ import Navigation
 import UrlParser exposing (..)
 
 
-type alias TopicId =
+type alias RepoId =
     String
 
 
 type Route
     = Home
-    | Topic TopicId
-    | Topics
+    | Repo RepoId
+    | Repos
 
 
 init : Navigation.Location -> Maybe Route
@@ -28,8 +28,8 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map Home top
-        , map Topic (s "topics" </> string)
-        , map Topics (s "topics")
+        , map Repo (s "Repos" </> string)
+        , map Repos (s "Repos")
         ]
 
 
@@ -41,10 +41,10 @@ urlFor route =
                 Home ->
                     "/"
 
-                Topic id ->
-                    "/topics/" ++ id
+                Repo id ->
+                    "/Repos/" ++ id
 
-                Topics ->
-                    "topics"
+                Repos ->
+                    "Repos"
     in
         "#" ++ url

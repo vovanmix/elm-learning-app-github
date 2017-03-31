@@ -7,6 +7,7 @@ import Update
 import Subscriptions
 import View
 import Routing
+import Commands exposing (fetchRepos)
 
 
 main : Program Never Model Msg
@@ -25,7 +26,7 @@ init location =
         currentRoute =
             Routing.init location
     in
-        ( initialModel currentRoute, Cmd.none )
+        ( initialModel currentRoute, fetchRepos )
 
 
 

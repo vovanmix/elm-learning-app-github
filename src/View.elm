@@ -4,18 +4,19 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Messages exposing (Msg)
 import Models exposing (..)
-import About
 import Routing
+import About
+import Repos
 
 
 links : List ( Routing.Route, String )
 links =
     [ ( Routing.Home, "Home" )
-    , ( Routing.Topics, "Topics" )
+    , ( Routing.Repos, "Repos" )
     ]
 
 
-navigationView : Model -> Html Msg
+navigationView : Model -> Html msg
 navigationView model =
     let
         linkListItem linkData =
@@ -27,12 +28,12 @@ navigationView model =
             ]
 
 
-link : ( Routing.Route, String ) -> Html Msg
+link : ( Routing.Route, String ) -> Html msg
 link ( route, label ) =
     a [ href <| Routing.urlFor route ] [ text label ]
 
 
-view : Model -> Html Msg
+view : Model -> Html msg
 view model =
     div []
         [ navigationView model
@@ -40,17 +41,17 @@ view model =
         ]
 
 
-body : Model -> Html Msg
+body : Model -> Html msg
 body model =
     case model.route of
         Just (Routing.Home) ->
             About.view
 
-        Just (Routing.Topic id) ->
-            text <| "Topic #" ++ id ++ " page"
+        Just (Routing.Repo id) ->
+            text <| "Repo #" ++ id ++ " page"
 
-        Just (Routing.Topics) ->
-            text "Topics page"
+        Just (Routing.Repos) ->
+            Repos.view model.repos
 
         Nothing ->
             text "404 Not Found!"
