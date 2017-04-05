@@ -1,34 +1,17 @@
-module Repos exposing (..)
+module RepoList.View exposing (..)
 
 import Html exposing (Html, text, h1, div)
 import Html.Attributes exposing (class)
-import RemoteData exposing (WebData)
 import Models exposing (Repo)
 
 
-view : WebData (List Repo) -> Html msg
-view response =
+view : List Repo -> Html msg
+view repos =
     div []
         [ h1 []
             [ text "My repos" ]
-        , maybeList response
+        , list repos
         ]
-
-
-maybeList : WebData (List Repo) -> Html msg
-maybeList response =
-    case response of
-        RemoteData.NotAsked ->
-            text ""
-
-        RemoteData.Loading ->
-            text "Loading..."
-
-        RemoteData.Success repos ->
-            list repos
-
-        RemoteData.Failure error ->
-            error |> toString |> text
 
 
 list : List Repo -> Html msg

@@ -2,11 +2,19 @@ module View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Messages exposing (Msg)
 import Models exposing (..)
 import Routing
 import About
-import Repos
+import RepoList.View as RepoListView
+import RepoShow.View as RepoShowView
+
+
+view : Model -> Html msg
+view model =
+    div []
+        [ navigationView model
+        , body model
+        ]
 
 
 links : List ( Routing.Route, String )
@@ -33,14 +41,6 @@ link ( route, label ) =
     a [ href <| Routing.urlFor route ] [ text label ]
 
 
-view : Model -> Html msg
-view model =
-    div []
-        [ navigationView model
-        , body model
-        ]
-
-
 body : Model -> Html msg
 body model =
     case model.route of
@@ -48,10 +48,10 @@ body model =
             About.view
 
         Just (Routing.Repo id) ->
-            text <| "Repo #" ++ id ++ " page"
+            RepoShowView.view model.repo
 
         Just (Routing.Repos) ->
-            Repos.view model.repos
+            RepoListView.view model.repos
 
         Nothing ->
             text "404 Not Found!"

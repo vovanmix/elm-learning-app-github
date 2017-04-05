@@ -7,12 +7,12 @@ import Update
 import Subscriptions
 import View
 import Routing
-import Commands exposing (fetchRepos)
+import Commands exposing (initialCommand)
 
 
 main : Program Never Model Msg
 main =
-    Navigation.program Messages.OnLocationChange
+    Navigation.program Messages.LocationChanged
         { init = init
         , update = Update.update
         , view = View.view
@@ -26,7 +26,7 @@ init location =
         currentRoute =
             Routing.init location
     in
-        ( initialModel currentRoute, fetchRepos )
+        ( initialModel currentRoute, initialCommand )
 
 
 

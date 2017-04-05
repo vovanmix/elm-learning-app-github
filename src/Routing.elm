@@ -4,13 +4,9 @@ import Navigation
 import UrlParser exposing (..)
 
 
-type alias RepoId =
-    String
-
-
 type Route
     = Home
-    | Repo RepoId
+    | Repo String
     | Repos
 
 
@@ -28,8 +24,8 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map Home top
-        , map Repo (s "Repos" </> string)
-        , map Repos (s "Repos")
+        , map Repo (s "repos" </> string)
+        , map Repos (s "repos")
         ]
 
 
@@ -42,9 +38,9 @@ urlFor route =
                     "/"
 
                 Repo id ->
-                    "/Repos/" ++ id
+                    "/repos/" ++ id
 
                 Repos ->
-                    "Repos"
+                    "repos"
     in
         "#" ++ url

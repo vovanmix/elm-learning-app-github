@@ -1,10 +1,12 @@
 module Messages exposing (..)
 
 import Navigation
-import Models exposing (Repo)
-import RemoteData exposing (WebData)
+import Models exposing (..)
 
 
 type Msg
-    = OnLocationChange Navigation.Location
-    | OnFetchRepos (WebData (List Repo))
+    = LocationChanged Navigation.Location
+    | ReposLoaded (List Repo)
+    | BranchesLoaded (List Branch)
+    | PullRequestsLoaded (List PullRequest)
+    | GeneralError String
