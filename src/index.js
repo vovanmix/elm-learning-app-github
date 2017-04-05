@@ -1,18 +1,8 @@
-'use strict';
+import 'material-design-lite/material.min.css';
+import 'material-design-lite/material.min.js';
 
 require('./index.html');
-let Elm = require('./Main');
 
-let apiKey = localStorage.getItem('apiKey');
+const  Elm = require('./Main');
 
-let app;
-
-if(apiKey){
-  app = Elm.Main.fullscreen({apiKey: apiKey});
-} else {
-  app = Elm.Main.fullscreen({apiKey: null});
-}
-
-app.ports.storeApiKey.subscribe(function(data){
-  localStorage.setItem('apiKey', data)
-});
+const app = Elm.Main.fullscreen();

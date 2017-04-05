@@ -1,11 +1,16 @@
+const path = require('path');
+const webpack = require('webpack');
+
 module.exports = {
   // Our initial entry point for the app
-  entry: './src/index.js',
+  entry: {
+    'index': './src/index.js'
+  },
 
   // Where we output files
   output: {
     path: './dist',
-    filename: 'index.js'
+    filename: '[name].js'
   },
 
   // How do you resolve modules?
@@ -23,10 +28,15 @@ module.exports = {
 
   module: {
     loaders: [
+      {
+          test: /\.js$/,
+          loaders: ['babel'],
+          include: path.join(__dirname, 'src')
+      },
       // We want to output html files from our project in the output directory
       {
         test: /\.html$/,
-        exclude: /node_modules/,
+        include: path.join(__dirname, 'src'),
         loader: 'file?name=[name].[ext]'
       },
 
@@ -35,9 +45,14 @@ module.exports = {
       // We also want to chain in `elm-hot`
       {
         test: /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/],
+        include: path.join(__dirname, 'src'),
         loader: 'elm-hot!elm-webpack'
-      }
+      },
+
+      { test: /\.css$/, loader: 'style!css' },
+      { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url?limit=8192' },
+      { test: /\.(otf|eot|ttf)$/, loader: "file?prefix=font/" },
+      { test: /\.svg$/, loader: "file" }
     ],
 
     // Don't try to parse elm files, because they will never `require` another module
