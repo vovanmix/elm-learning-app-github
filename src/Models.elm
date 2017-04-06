@@ -6,9 +6,7 @@ import Routing
 type alias Model =
     { route : Maybe Routing.Route
     , repos : List Repo
-    , repo : Maybe Repo
     , branches : List Branch
-    , branch : Maybe Branch
     , commits : List Commit
     , pullRequests : List PullRequest
     , errorMessage : Maybe String
@@ -19,9 +17,7 @@ initialModel : Maybe Routing.Route -> Model
 initialModel route =
     { route = route
     , repos = []
-    , repo = Nothing
     , branches = []
-    , branch = Nothing
     , commits = []
     , pullRequests = []
     , errorMessage = Nothing

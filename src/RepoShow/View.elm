@@ -6,21 +6,33 @@ import Models exposing (Repo, Branch, PullRequest)
 
 
 -- try to put branches and PRs under repo and pass only a repo here?
+-- where is the best place to check that repo exists and handle the incorrect ID case?
+-- Should we pass in the repo ID or the repo itself?
+-- Not sure that picking the repo in the view is the best way?
 
 
-view : Maybe Repo -> List Branch -> List PullRequest -> Html msg
-view repo branches pullRequests =
-    case repo of
-        Just a ->
-            div []
-                [ h1 []
-                    [ text a.name ]
-                , listBranches branches
-                , listPRs pullRequests
-                ]
+view : String -> List Repo -> List Branch -> List PullRequest -> Html msg
+view repoName repos branches pullRequests =
+    let
+        repo =
+            List.filter (\repo -> repo.name == repoName) repos |> List.head
+    in
+        case repo of
+            Just a ->
+                repoPage a branches pullRequests
 
-        Nothing ->
-            text "404"
+            Nothing ->
+                text "404"
+
+
+repoPage : Repo -> List Branch -> List PullRequest -> Html msg
+repoPage repo branches pullRequests =
+    div []
+        [ h1 []
+            [ text repo.name ]
+        , listBranches branches
+        , listPRs pullRequests
+        ]
 
 
 listBranches : List Branch -> Html msg

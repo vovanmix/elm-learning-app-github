@@ -21,4 +21,4 @@ updateRepo model repoName =
 
         -- change route to 404 if Nothing?
     in
-        ( { model | repo = selectedRepo }, cmd )
+        ( model, cmd )

@@ -48,7 +48,7 @@ body model =
             About.view
 
         Just (Routing.Repo id) ->
-            RepoShowView.view model.repo model.branches model.pullRequests
+            RepoShowView.view id model.repos model.branches model.pullRequests
 
         Just (Routing.Repos) ->
             RepoListView.view model.repos
